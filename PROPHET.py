@@ -7,17 +7,6 @@ from fbprophet import Prophet
 from fbprophet.plot import plot_plotly
 from plotly import graph_objs as go
 
-START = "2015-01-01"
-TODAY = date.today().strftime("%Y-%m-%d")
-
-st.title('Proyecto Inteligencia de Negocios - Facebook Prophet')
-
-stocks = ('GOOG', 'AAPL', 'MSFT', 'GME')
-selected_stock = st.selectbox('Selecciona la acción a evaluar', stocks)
-
-n_years = st.slider('Años de predicción:', 1, 4)
-period = n_years * 365
-
 
 @st.cache
 def load_data(ticker):
@@ -25,41 +14,51 @@ def load_data(ticker):
     data.reset_index(inplace=True)
     return data
 
-	
-data_load_state = st.text('Cargando datos...')
-data = load_data(selected_stock)
-data_load_state.text('Cargando datos... ¡Listo!')
-
-st.subheader('Datos cargados:')
-st.write(data.tail())
-
-# Plot raw data
-def plot_raw_data():
+def plot_raw_data(data):
 	fig = go.Figure()
 	fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], name="stock_open"))
 	fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], name="stock_close"))
 	fig.layout.update(title_text='Datos de series de tiempo con RangeSlider', xaxis_rangeslider_visible=True)
 	st.plotly_chart(fig)
-	
-plot_raw_data()
 
-# Predecimos usando Prophet
-df_train = data[['Date','Close']]
-df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
+START = "2015-01-01"
+TODAY = date.today().strftime("%Y-%m-%d")
 
-m = Prophet()
-m.fit(df_train)
-future = m.make_future_dataframe(periods=period)
-forecast = m.predict(future)
+def main():
+  st.title('Proyecto Inteligencia de Negocios - Facebook Prophet')
 
-# Mostramos y graficamos el Forecast
-st.subheader('Datos del Forecast')
-st.write(forecast.tail())
+  stocks = ('GOOG', 'AAPL', 'MSFT', 'GME')
+  selected_stock = st.selectbox('Selecciona la acción a evaluar', stocks)
+
+  n_years = st.slider('Años de predicción:', 1, 4)
+  period = n_years * 365
     
-st.write(f'Gráfico del Forecast para {n_years} años')
-fig1 = plot_plotly(m, forecast)
-st.plotly_chart(fig1)
+  data_load_state = st.text('Cargando datos...')
+  data = load_data(selected_stock)
+  data_load_state.text('Cargando datos... ¡Listo!')
 
-st.write("Componentes del Forecast")
-fig2 = m.plot_components(forecast)
-st.write(fig2)
+  st.subheader('Datos cargados:')
+  st.write(data.tail())
+    
+  plot_raw_data(data)
+
+  # Predecimos usando Prophet
+  df_train = data[['Date','Close']]
+  df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
+
+  m = Prophet()
+  m.fit(df_train)
+  future = m.make_future_dataframe(periods=period)
+  forecast = m.predict(future)
+
+  # Mostramos y graficamos el Forecast
+  st.subheader('Datos del Forecast')
+  st.write(forecast.tail())
+      
+  st.write(f'Gráfico del Forecast para {n_years} años')
+  fig1 = plot_plotly(m, forecast)
+  st.plotly_chart(fig1)
+
+  st.write("Componentes del Forecast")
+  fig2 = m.plot_components(forecast)
+  st.write(fig2)

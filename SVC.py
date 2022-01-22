@@ -138,4 +138,4 @@ ${conf_matrix}
   st.subheader("Cum_Ret vs Cum_Strategy")
   graficar_predicciones([],df['Cum_Ret'], df['Cum_Strategy'], "Cum_Ret", "Cum_Strategy")
 
-main()
+# main()
