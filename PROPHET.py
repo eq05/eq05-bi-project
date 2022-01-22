@@ -27,8 +27,9 @@ TODAY = date.today().strftime("%Y-%m-%d")
 def main():
   st.title('Proyecto Inteligencia de Negocios - Facebook Prophet')
 
-  stocks = ('GOOG', 'AAPL', 'MSFT', 'GME')
-  selected_stock = st.selectbox('Selecciona la acción a evaluar', stocks)
+  # stocks = ('GOOG', 'AAPL', 'MSFT', 'GME', 'BVN')
+  # selected_stock = st.selectbox('Selecciona la acción a evaluar', stocks)
+  selected_stock = st.text_input('Ingresa la acción')
 
   n_years = st.slider('Años de predicción:', 1, 4)
   period = n_years * 365
