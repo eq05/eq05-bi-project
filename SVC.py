@@ -72,8 +72,9 @@ def format_data(dataframe):
 def main():
 
   st.title('Proyecto Inteligencia de Negocios - SVC')
-  stocks = ('GOOG', 'AAPL', 'MSFT', 'GME')
-  selected_stock = st.selectbox('Selecciona la acción a evaluar', stocks)
+  # stocks = ('GOOG', 'AAPL', 'MSFT', 'GME', 'BVN')
+  # selected_stock = st.selectbox('Selecciona la acción a evaluar', stocks)
+  selected_stock = st.text_input('Ingresa la acción')
 
   year_initial = st.slider('Año inicial:', 2010, 2020, 2020)
   date_initial = f"{year_initial}-01-01"
