@@ -91,7 +91,7 @@ pyarrow==6.0.1
 pycparser==2.21
 pydeck==0.7.1
 Pygments==2.11.2
-pygpu
+# pygpu
 # PyMeeus @ file:///home/conda/feedstock_root/build_artifacts/pymeeus_1615809745702/work
 Pympler==1.0.1
 # pyparsing @ file:///home/conda/feedstock_root/build_artifacts/pyparsing_1636757021002/work
