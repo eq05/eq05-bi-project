@@ -29,7 +29,7 @@ def main():
 
   # stocks = ('GOOG', 'AAPL', 'MSFT', 'GME', 'BVN')
   # selected_stock = st.selectbox('Selecciona la acción a evaluar', stocks)
-  selected_stock = st.text_input('Ingresa la acción')
+  selected_stock = st.text_input('Ingresa la acción', "AAPL")
 
   n_years = st.slider('Años de predicción:', 1, 4)
   period = n_years * 365

@@ -55,8 +55,9 @@ def main():
   st.header('Paso 1 - Escriba el código de la acción')
   # stocks = ('GOOG', 'AAPL', 'MSFT', 'GME', 'BVN')
   # selected_stock = st.selectbox('Selecciona la acción a evaluar', stocks)
-  selected_stock = st.text_input('Ingresa la acción')
-  
+  selected_stock = st.text_input('Ingresa la acción', "AAPL")
+  # selected_stock = st.text_input('Ingresa la acción')
+
   st.header('Paso 2 - Seleccione el año inicial')
   year_initial = st.slider('Año inicial:', 2014, 2020, 2020)
   date_initial = f"{year_initial}-01-01"
