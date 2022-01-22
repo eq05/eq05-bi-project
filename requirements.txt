@@ -64,6 +64,7 @@ lxml==4.7.1
 # Markdown @ file:///home/conda/feedstock_root/build_artifacts/markdown_1637220118004/work
 # MarkupSafe @ file:///D:/bld/markupsafe_1635833748820/work
 # matplotlib @ file:///D:/bld/matplotlib-suite_1639359207070/work
+matplotlib
 matplotlib-inline==0.1.3
 mistune==0.8.4
 multitasking==0.0.10
