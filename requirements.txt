@@ -105,7 +105,7 @@ pystan==2.19.1.1
 # pytz @ file:///home/conda/feedstock_root/build_artifacts/pytz_1633452062248/work
 pytz-deprecation-shim==0.1.0.post0
 # pywin32==303
-pywinpty==1.1.6
+# pywinpty==1.1.6
 # PyYAML @ file:///D:/bld/pyyaml_1636139977724/work
 pyzmq==22.3.0
 requests==2.27.1
