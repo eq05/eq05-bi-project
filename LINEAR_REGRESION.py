@@ -107,4 +107,4 @@ def main():
   st.subheader("Classification Report")
   st.code(classification_report(y_test, prediccion))
 
-main()
+# main()

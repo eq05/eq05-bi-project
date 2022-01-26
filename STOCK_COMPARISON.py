@@ -29,4 +29,4 @@ def main():
     )
     st.line_chart(df)
 
-main()
+# main()
