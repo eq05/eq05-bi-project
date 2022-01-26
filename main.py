@@ -4,7 +4,7 @@ from LSTM import main as LSTM_main
 from PROPHET import main as PROPHET_main
 from SVC import main as SVC_main
 
-st.sidebar.title("Proyecto BI - Eq05")
+st.sidebar.title("Proyecto BI - Eq05 - TEST NUEVO CAMBIO")
 
 with st.sidebar.expander("Información", True):
   st.markdown("""

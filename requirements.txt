@@ -149,3 +149,4 @@ yfinance==0.1.69
 # zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1641731510635/work
 tensorflow
 fbprophet
+streamlit_tags

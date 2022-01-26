@@ -80,64 +80,73 @@ def main():
   year_initial = st.slider('Año inicial:', 2010, 2020, 2020)
   date_initial = f"{year_initial}-01-01"
 
-  data_load_state = st.text('Cargando datos...')
-  dataframe = load_data(selected_stock, date_initial, TODAY)
-  data_load_state.text('Cargando datos... ¡Listo!')
+  stock_valid = False
 
-  df = format_data(dataframe)
+  try:
+    data_load_state = st.text('Cargando datos...')
+    dataframe = load_data(selected_stock, date_initial, TODAY)
+    data_load_state.text('Cargando datos... ¡Listo!')
+    stock_valid = True
+  except:
+    stock_valid = False
+    st.error(f"La acción {selected_stock} no existe o no es un valor valido, por favor ingrese el valor nuevamente.")
   
-  # Create predictor variables
-  df['Open-Close'] = df.Open - df.Close
-  df['High-Low'] = df.High - df.Low
+
+  if stock_valid:
+    df = format_data(dataframe)
     
-  # Store all predictor variables in a variable X
-  X = df[['Open-Close', 'High-Low']]
+    # Create predictor variables
+    df['Open-Close'] = df.Open - df.Close
+    df['High-Low'] = df.High - df.Low
+      
+    # Store all predictor variables in a variable X
+    X = df[['Open-Close', 'High-Low']]
 
-  # Target variables
-  y = np.where(df['Close'].shift(-1) > df['Close'], 1, 0)
+    # Target variables
+    y = np.where(df['Close'].shift(-1) > df['Close'], 1, 0)
 
-  split_percentage = 0.8
-  split = int(split_percentage*len(df))
-    
-  # Train data set
-  X_train = X[:split]
-  y_train = y[:split]
-    
-  # Test data set
-  X_test = X[split:]
-  y_test = y[split:]
+    split_percentage = 0.8
+    split = int(split_percentage*len(df))
+      
+    # Train data set
+    X_train = X[:split]
+    y_train = y[:split]
+      
+    # Test data set
+    X_test = X[split:]
+    y_test = y[split:]
 
-  # Support vector classifier
-  cls = SVC().fit(X_train, y_train)
+    # Support vector classifier
+    cls = SVC().fit(X_train, y_train)
 
-  y_prediction = cls.predict(X_test)
+    y_prediction = cls.predict(X_test)
 
-  SCORE = precision_score(y_test, y_prediction, average='micro')
-  conf_matrix = metrics.classification_report(y_test, y_prediction)
-  st.markdown(f"""
-  ## Matriz de Confusión:
-```
-${conf_matrix}
-```
-  ## Score:
-  {SCORE*100}%
-  """)
-
-
-  df['Predicted_Signal'] = cls.predict(X)
-  # Calculate daily returns
-  df['Return'] = df.Close.pct_change()
-  # Calculate strategy returns
-  df['Strategy_Return'] = df.Return * df.Predicted_Signal.shift(1)
-  # Calculate Cumulutive returns
-  df['Cum_Ret'] = df['Return'].cumsum()
-  # Plot Strategy Cumulative returns 
-  df['Cum_Strategy'] = df['Strategy_Return'].cumsum()
-  st.subheader("Columnas calculadas")
-  st.write(df[['Open-Close', 'High-Low', "Predicted_Signal", "Return", "Strategy_Return", "Cum_Ret", "Cum_Strategy"]])
+    SCORE = precision_score(y_test, y_prediction, average='micro')
+    conf_matrix = metrics.classification_report(y_test, y_prediction)
+    st.markdown(f"""
+    ## Matriz de Confusión:
+  ```
+  ${conf_matrix}
+  ```
+    ## Score:
+    {SCORE*100}%
+    """)
 
 
-  st.subheader("Cum_Ret vs Cum_Strategy")
-  graficar_predicciones([],df['Cum_Ret'], df['Cum_Strategy'], "Cum_Ret", "Cum_Strategy")
+    df['Predicted_Signal'] = cls.predict(X)
+    # Calculate daily returns
+    df['Return'] = df.Close.pct_change()
+    # Calculate strategy returns
+    df['Strategy_Return'] = df.Return * df.Predicted_Signal.shift(1)
+    # Calculate Cumulutive returns
+    df['Cum_Ret'] = df['Return'].cumsum()
+    # Plot Strategy Cumulative returns 
+    df['Cum_Strategy'] = df['Strategy_Return'].cumsum()
+    st.subheader("Columnas calculadas")
+    st.write(df[['Open-Close', 'High-Low', "Predicted_Signal", "Return", "Strategy_Return", "Cum_Ret", "Cum_Strategy"]])
+
+
+    st.subheader("Cum_Ret vs Cum_Strategy")
+    graficar_predicciones([],df['Cum_Ret'], df['Cum_Strategy'], "Cum_Ret", "Cum_Strategy")
 
 # main()
