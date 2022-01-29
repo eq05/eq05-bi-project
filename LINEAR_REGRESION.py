@@ -107,4 +107,9 @@ def main():
   st.subheader("Classification Report")
   st.code(classification_report(y_test, prediccion))
 
+  st.subheader('Referencias')
+  st.markdown("""
+**Emerzon Chavez** | Eq04 - Regresión Logística ([Ver video](https://www.youtube.com/watch?v=33XTVhzUEnk))
+""")
+
 # main()

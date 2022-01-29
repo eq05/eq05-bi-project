@@ -5,6 +5,7 @@ from PROPHET import main as PROPHET_main
 from SVC import main as SVC_main
 from LINEAR_REGRESION import main as LINEAR_REGRESION_main
 from STOCK_COMPARISON import main as STOCK_COMPARISON_main
+from RANDOM_FOREST import main as RANDOM_FOREST_main
 
 st.sidebar.title("Proyecto BI - Eq05")
 
@@ -39,7 +40,7 @@ with st.expander("Ejecuta un modelo", True):
 
   app = st.radio(
       "Modelos disponibles:",
-      ('Ninguno','Facebook Prophet','LSTM', 'SVC', 'Regresión Lineal', 'Comparación de acciones'))
+      ('Ninguno','Facebook Prophet','LSTM', 'SVC', 'Regresión Lineal', 'Random Forest', 'Comparación de acciones'))
 
 with st.container():
   if  app == 'Ninguno':
@@ -57,4 +58,6 @@ with st.container():
     LINEAR_REGRESION_main()
   elif app == 'Comparación de acciones':
     STOCK_COMPARISON_main()
+  elif app == 'Random Forest':
+    RANDOM_FOREST_main()
   
