@@ -65,6 +65,12 @@ def preprocesar(dataframe):
 
   return df[list(dataframe.columns) + ['CompraVenta']]
 
+def show_refs():
+  st.subheader('Referencias')
+  st.markdown("""
+**Emerzon Chavez** | Eq04 - Regresión Logística ([Ver video](https://www.youtube.com/watch?v=33XTVhzUEnk))
+""")
+
 def main():
 
   st.subheader('Selecciona el dataset')
@@ -107,9 +113,6 @@ def main():
   st.subheader("Classification Report")
   st.code(classification_report(y_test, prediccion))
 
-  st.subheader('Referencias')
-  st.markdown("""
-**Emerzon Chavez** | Eq04 - Regresión Logística ([Ver video](https://www.youtube.com/watch?v=33XTVhzUEnk))
-""")
+  show_refs()
 
 # main()

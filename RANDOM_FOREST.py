@@ -59,6 +59,12 @@ def obv(group):
   
   return pd.Series(obv_values, index = group.index)
 
+def show_refs():
+  st.subheader('Referencias')
+  st.markdown("""
+**Eduardo Navarro** | Eq2 - Modelo Random Forest ([Ver video](https://www.youtube.com/watch?v=q5n639HXEZA))
+""")
+
 def main():
   keys_generator = get_new_key()
 
@@ -75,10 +81,17 @@ def main():
   start = st.date_input('Inicio', value = pd.to_datetime('2021-01-01'))
   end = st.date_input('Final', value = pd.to_datetime('today'))
 
+
   if len(tickers) >= 2: 
     df = get_merge_df(tickers, start, end)
+    cant_empresas = len(df['Empresa'].value_counts().index)
+    if (cant_empresas < 2):
+      st.warning("Ingrese al menos dos acciones validas")
+      show_refs()
+      return
   else: 
     st.warning("Ingrese al menos dos acciones")
+    show_refs()
     return
 
   st.subheader("Dataframe cargado:")
@@ -258,9 +271,5 @@ def main():
   st.subheader('Evaluación del modelo: puntaje de error fuera de la bolsa')
   st.success('Random Forest Out-Of-Bag Error Score: {}'.format(rand_frst_clf.oob_score_))
 
-  st.subheader('Referencias')
-  st.markdown("""
-**Eduardo Navarro** | Eq2 - Modelo Random Forest ([Ver video](https://www.youtube.com/watch?v=q5n639HXEZA))
-""")
-
+  show_refs()
 # main()
